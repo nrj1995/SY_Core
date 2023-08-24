@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row About_Head">
+  <div class=" col-lg-12 col-md-12 col-xs-12 About_Head_Img ">
+    <img src="{% static '/storyyatra/img/panorma.webp' %}" alt="Card image">
+  </div>
+  <div class="row text-center">
+    <div class="col-lg-12 col-md-12 col-xs-12 About_Head_Text">
+      <h2>Story-यात्रा</h2>
+      <h5>nayee rahe. yahi chahe</h5>
+      <!-- <p class="">Last updated 3 mins ago</p> -->
+    </div>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-3 col-md-3 col-xs-12">
+    <ul class="state-ul">
+      {% for state in states %}
+      <li class="state-li" data-state="{{ state.state }}">{{ state.state }}</li>
+      {% endfor %}
+      
+    </ul>
+  </div>
+  <div class="col-lg-7 col-md-7 col-xs-12 homebloglist" id="state-blogs">
+
+
+  </div>
+
+</div>
+
+
+<script>
+  $(document).ready(function () {
+    $('.state-li').click(function () {
+      var state = $(this).data('state');
+      $.ajax({
+        url: '/get-state-blog/',
+        method: 'GET',
+        data: { state: state },
+        success: function (response) {
+          // handle the response from the server
+          var data = response.data;
+          console.log("printin data", data);
+          var html = '';
+          for (var i = 0; i < data.length; i++) {
+            html += '<a href="/detailed_blog/' + data[i].id + '">' +
+              '<div class="card mb-3"><div class="row no-gutters"><div class="col-md-4"><img src="/media/' + data[i].photo_1 + '" alt="{{i.title}}" style="height: 24vh; width: auto;" /></div>' +
+              '<div class="col-md-8"><div class="card-body"><h5 class="card-title">' + data[i].title + '</h5><p class="card-text">' + data[i].description + '.....Read more</p>' +
+              '<p class="card-text"><small class="text-muted">' + moment(data[i].date_posted).format("MM/DD/YYYY hh:mm:ss A") + '</small></p></div></div></div></div></a>';
+          }
+          $('#state-blogs').html(html);
+        },
+        error: function (xhr, status, error) {
+          console.error(xhr.responseText);
+        }
+      });
+    });
+
+    // clear the div when another button is clicked
+    $('.state-li').click(function () {
+      $('#state-blogs').html('');
+    });
+  });
+</script>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="row About_Head">
+  <div class=" col-lg-12 col-md-12 col-xs-12 About_Head_Img ">
+    <img src="{% static '/storyyatra/img/panorma.webp' %}" alt="Card image">
+  </div>
+  <div class="row text-center">
+    <div class="col-lg-12 col-md-12 col-xs-12 About_Head_Text">
+      <h2>Story-यात्रा</h2>
+      <h5>nayee rahe. yahi chahe</h5>
+      <!-- <p class="">Last updated 3 mins ago</p> -->
+    </div>
+
+  </div>
+</div>
+{% if results %}
+<h2>{{searchCount}} Search Results for "{{query}}" </h2>
+{% comment %} <ul>
+  {% for result in results %}
+  <li>
+    <h3><a href="{% url 'detailed_blog' result.pk %}">{{ result.title }}</a></h3>
+    <p>{{ result.content }}</p>
+  </li>
+  {% endfor %}
+</ul> {% endcomment %}
+<div style="display:block;">
+
+  <div class="row">
+    <div class="col-md-8 col-lg-8 homebloglist">
+      <!-- blogcard -->
+      {% for result in results %}
+      <a href="{% url 'detailed_blog' result.id %}">
+        <div class="card mb-3">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="{{result.photo_1.url}}" alt="{{result.title}}" style="height: 24vh; width: auto;" />
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{result.title}}</h5>
+                <p class="card-text">{{result.description|slice:":100"}}.....  <i>By {{result.author}}</i></p>
+                <p class="card-text"><small class="text-muted">{{result.date_posted}}</small>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+
+      <!-- end blog card -->
+    </div>
+    <div class="col-md-3 col-lg-3">
+      <div class="">
+        <iframe width="300" height="auto" src="https://www.youtube-nocookie.com/embed/FW06ZVj9JxY"
+          title="YouTube video player" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+<H2>No results found.</H2>
+{% endif %}
+{% endblock %}

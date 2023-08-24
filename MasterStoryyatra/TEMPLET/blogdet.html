@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block content %}
+
+<div class="container-fluid Blog_Post_Head">
+    <div class="row">
+        <div class="Blog_Post_Head_Img col-lg-10 col-md-10 col-xs-10 offset-1">
+            <img src={{blog_data.photo_1.url}} alt="Card image">
+        </div>
+        <div class="row text-center Blog_Post_Head_text">
+            <div class="col-lg-12 col-md-12 col-xs-12 ">
+                <h5>{{blog_data.title}}</h5>
+                <p class="">{{blog_data.description}}</p>
+                <p class=""><i>BY {{blog_data.author}}</i></p>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="Blog_Post_Body row">
+    <div class="Blog_Post_Body_content col-lg-8 col-md-8 col-xs-10">
+        <div class="">
+            <p class="card-text">{{blog_data.content|safe}}</p>
+
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+        {% if blog_data.photo_3 %}
+        <img class="card-img-bottom" src="{{blog_data.photo_3.url}}" alt="Card image cap">
+        <!-- <button id="like-button">Like</button><span id="likes-count">{{blog_data.likes}}</span> -->
+        {% endif %}
+    </div>
+    <div class="col-lg-3 col-md-3 col-xs-12">
+        <h2>ad or post needs to be added</h2>
+    </div>
+</div>
+<button class="btn" type="button" id="like-button" style="border: 2px solid;border-radius: 16px;"><i
+        class="far fa-heart like-icon"></i> <span id="likes-count">{{blog_data.likes}}</span></button>
+<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom"
+    aria-controls="offcanvasBottom">Comment</button>
+
+<div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel"
+    style="height: 75%;">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasBottomLabel">Comment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body small">
+        {% include 'comment_form.html' %}
+
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        $('#like-button').click(function () {
+
+            var post_id = {{ blog_data.id }};
+
+        // Get the CSRF token from the cookie
+        var csrftoken = Cookies.get('csrftoken');
+
+        // Set the CSRF token in the AJAX request headers
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader('X-CSRFToken', csrftoken);
+                }
+            }
+        });
+
+        $.ajax({
+
+            url: '/like-post/' + post_id + '/',
+
+            type: 'POST',
+
+            dataType: 'json',
+            //data: {'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+
+            // },
+
+            success: function (response) {
+
+                $('#likes-count').text(response.likes);
+                $('.like-icon').css('color', 'red');
+                $('#like-button').prop('disabled', true);
+
+            },
+
+            error: function (xhr, status, error) {
+
+                console.log(error);
+
+            }
+
+        });
+
+
+    });
+  
+  });
+
+</script>
+
+<!-- -------------------------Comment Section------------------------------- -->
+<div class="row">
+    <div class="col-lg-8 col-md-8 col-xs-12 comment-box">
+
+        <div class="comments">
+            <ul class="comment-list">
+                {% for comment in comments|filter_comments %}
+                <li class="comment">
+                    <div class="comment-header">
+                        <span> <i class="fa fa-comments" aria-hidden="true"></i>
+                            <h5 class="comment-author">{{ comment.name }}</h5>
+                        </span>
+
+                        <span class="comment-date">{{ comment.created_at }}</span>
+                    </div>
+                    <div class="comment-body">
+                        <p>{{ comment.text }}</p>
+                        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#{{comment.id}}" aria-controls="offcanvasBottom">Reply</button>
+
+                        <div class="offcanvas offcanvas-bottom" tabindex="-1" id="{{comment.id}}"
+                            aria-labelledby="offcanvasBottomLabel" style="height: 75%;">
+                            <div class="offcanvas-header">
+                                <h5 class="offcanvas-title" id="offcanvasBottomLabel">Comment</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body small">
+                                <form action="{% url 'reply_comment' comment.id %}" method="post" id="comment-form">
+                                    <h3>Reply to {{comment.name}}...</h3>
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="name">Name:</label>
+                                        <input type="text" name="name" id="name" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email:</label>
+                                        <input type="email" name="email" id="email" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="body">Comment:</label>
+                                        <textarea name="text" id="body" rows="4" class="form-control"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <ul class="comment-replies">
+                        {% for reply in comment.replies.all|filter_replies %}
+                        <li class="comment">
+                            <div class="comment-header">
+                                <span> <i class="fa fa-comments" aria-hidden="true"></i>
+                                    <h5 class="comment-author">{{ reply.name }}</h5>
+                                </span>
+                                <span class="comment-date">{{ reply.created_at }}</span>
+                            </div>
+                            <div class="comment-body">
+                                <p>{{ reply.text }}</p>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endfor %}
+                <!-- more comments -->
+            </ul>
+        </div>
+
+
+
+
+
+
+    </div>
+</div>
+
+<!-- ----------------comment End-------------------------------------- -->
+
+
+{% endblock %}

@@ -1,0 +1,210 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StoryYatra | nayi rahe yahi chahe</title>
+
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+
+  <link rel="stylesheet" type="text/css" href="{% static '/storyyatra/css/bootstrap/bootstrap.min.css' %}" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="icon" type="image/x-icon" href="{% static '/storyyatra/img/backpacker.jpg' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static '/storyyatra/css/style.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static '/storyyatra/css/utils.css' %}" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+    integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <script>
+    function changeTitle(newTitle) {
+      document.title = newTitle;
+    }
+  </script>
+
+  <style>
+    .like-icon {
+      color: black;
+      /* Set the initial color */
+      cursor: pointer;
+      /* Change the cursor to a hand pointer on hover */
+    }
+
+    .like-icon.clicked {
+      color: red;
+      /* Change the color to red when clicked */
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ***************************home banner***************************** -->
+  <header>
+
+    <nav class="navbar navbar-expand-lg navbar-light nav">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'index' %}">STORY-YATRA</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+            </li>
+           
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Explore
+              </a>
+              <ul class="dropdown-menu">
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'about' %}">About</a>
+            </li>
+          </ul>
+          <form class="d-flex" role="search" action="{% url 'search' %}">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q" required>
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+
+
+  {% block content %}
+
+  {% endblock %}
+ 
+
+  <footer>
+    <div class="fitfooter text-center fixed-bottom" id="topheader1">
+      <section class="fotersec ">
+        <div class="container-fluid">
+          <div class="footerhai">
+            <div class="row ">
+              <div class="col-lg-4 col-md-6 col-12 ">
+                <h3 class="footerh3">Sharing Our Adventures</h3>
+                <p><b>StoryYatra</b> "Where words take flight,
+                   our stories ignite a sense of wonder.
+                   Discover the joy of wandering, as we share tales that resonate with the traveler in you,
+                   inspiring new horizons and unforgettable experiences. Let our stories guide your footsteps and inspire your own narrative,
+                   as you traverse the globe and forge meaningful connections along the way."</p>
+
+              </div>
+              <div class="col-lg-4 col-md-6 col-12 ">
+                <h3 class="footerh3">Important link</h3>
+                <ul>
+                  <li><a href="{% url 'index' %}">Start your journey</a></li>
+                  <li><a href="{% url 'index' %}">Home</a></li>
+                  <li><a href="{% url 'about' %}">about us</a></li>
+                  <!-- <li><a href="" data-toggle="modal" data-target="#exampleModal">Feedback</a></li> -->
+                </ul>
+              </div>
+
+              <div class="col-lg-4 col-md-6 col-12 footerlogo">
+                <h3 class="footerh3">Connect with us</h3>
+                <!--Facebook-->
+                <a href="https://www.facebook.com/profile.php?id=100091113944717" class="fb-ic mr-3" role="button"><i class="fab fa-lg fa-facebook-f logo"></i></a>
+                <!--Instagram-->
+                <a href="https://www.instagram.com/storyyatra/" target="_blank" class="ins-ic mr-3" role="button"><i
+                    class="fab fa-lg fa-instagram logo"></i></a>
+                <!--Youtube-->
+                <a href="https://www.youtube.com/@storyyatra" class="yt-ic mr-3" role="button"><i class="fab fa-lg fa-youtube logo"></i></a>
+
+
+              </div>
+
+
+            </div>
+            <div class=" row copyright ">
+              <div class="col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-12">
+                <p>॥ नई राहे यही चाहे ॥</p>
+                <p class="cp-text">
+                  ©2023 STORYYATRA. All rights reserved with storyyatra.in.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+      </section>
+
+
+    </div>
+    <div class="scrolltop float-right">
+      <i class="fa fa-arrow-up" onclick="topFunction()" id="topbutton"></i>
+    </div>
+  </footer>
+
+
+
+
+
+  <script type="text/javascript" src="{% static '/storyyatra/js/bootstrapJS/bootstrap.min.js' %}">
+  </script>
+  <script type="text/javascript" src="{% static '/storyyatra/js/story.js' %}">
+  </script>
+  <script>
+$(document).ready(function() {
+  $.ajax({
+    url: '/navbar/',
+    success: function(data) {
+      console.log('<<<<<<<<<',data.data)
+      var items = data.data;
+      var $dropdownMenu = $('.dropdown-menu');
+      $.each(items, function(index, item) {
+        var $li = $('<li>').appendTo($dropdownMenu);
+        $('<a>', { href:"/nation-detail/" + item + "/", text: item ,class:'dropdown-item'}).appendTo($li);
+      });
+    }
+  });
+  
+});
+
+
+// ----------------- code for activating nav items on click-------------------
+    const navLinks = document.querySelectorAll(".nav-link");
+    
+    window.addEventListener("load", function() {
+      // Set the active navigation item based on the current pathname
+      setActiveNavItem(window.location.pathname);
+    });
+    
+    function setActiveNavItem(pathname) {
+      navLinks.forEach(function(link) {
+        if (link.getAttribute("href") === pathname) {
+          link.classList.add("active");
+        } else {
+          link.classList.remove("active");
+        }
+      });
+    }
+    
+    navLinks.forEach(function(link) {
+      link.addEventListener("click", function(event) {
+        // event.preventDefault();
+        const href = this.getAttribute("href");
+        // Change the URL without reloading the page
+        window.history.pushState(null, null, href);
+        setActiveNavItem(href);
+      });
+    });
+// code for activating nav items on click END here........
+  </script>
+
+
+</body>
+
+</html>

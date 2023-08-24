@@ -1,0 +1,55 @@
+/**********universal styling applyis on all*********/
+*{margin: 0; padding: 0; box-sizing: border-box;}
+html {
+  scroll-behavior: smooth; /* Smooth scroling */
+  font-size: 16px;
+  
+}
+.container {
+    width: 80%;
+    margin: 0 auto;            
+  }
+
+:root {
+    --bg-color-1: #01BAEF;
+    --bg-color-2: #20BF55;
+}          
+
+body {
+    overflow-x: hidden;
+    /* Hide horizontal scrollbar */
+}
+
+/* *********************home banner content css********** */
+
+.yatradiv h1 {
+    color: #fff;
+    animation: fadeInRight 1.5s ease-in-out;
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(400px);
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.storydiv h1 {
+    color: #fff;
+    animation: fadeInLeft 1.5s ease-in-out;
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-400px);
+    }
+
+    to {
+        opacity: 1;
+    }
+}

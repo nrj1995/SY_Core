@@ -1,0 +1,23 @@
+{% if comments %}
+  <ul class="comment-list">
+    {% for comment in comments %}
+      {% comment %} <li class="comment">
+        <div class="comment-author">{{ comment.name }}</div>
+        <div class="comment-date">{{ comment.created_at }}</div>
+        <div class="comment-text">{{ comment.text }}</div>
+      </li> {% endcomment %}
+      <li class="comment">
+      <div class="comment-author">
+        <i class="fa fa-arrow-up"></i>
+        <h5>John Doe</h5>
+      </div>
+      <div class="comment-content">
+        <p>This is a great article. Thanks for sharing!</p>
+        <span class="comment-date">Posted on January 1, 2023</span>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>There are no comments yet.</p>
+{% endif %}
