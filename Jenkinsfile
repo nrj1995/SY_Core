@@ -4,7 +4,6 @@ pipeline {
     stage('in') {
       steps {
         echo 'we are in the jenkins'
-        sh 'pwd'
       }
     }
 
