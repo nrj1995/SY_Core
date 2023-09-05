@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-^wvf25m&fgn3*q*f=+qtz=rg8p+1elzt=@gik@o8n&@-x(g4)7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -76,13 +76,23 @@ WSGI_APPLICATION = 'StoryYatra.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
+    # # test
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'testDB',
+    #     'USER': 'postgres',
+    #     'PASSWORD': 'admin',
+    #     'HOST': 'localhost',
+    #     'PORT': '5432'   
+    # }
+    # prod
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'testDB',
-        'USER': 'postgres',
-        'PASSWORD': 'admin',
+        'NAME': 'sy_db',
+        'USER': 'sy_db_user',
+        'PASSWORD': 'sy_neer',
         'HOST': 'localhost',
-        'PORT': '5432'   
+        'PORT': '5432'
     }
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
