@@ -1,2 +1,4 @@
 MasterStoryyatra/media/
+MasterStoryyatra/staticfiles/
+**/__pycache__/
 
