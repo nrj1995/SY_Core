@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from yatra.models import *
 from StoryYatra import settings
-
+from decimal import Decimal
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse  
 from django.shortcuts import redirect  
@@ -9,10 +9,28 @@ from django.db.models import Q
 from .forms import *
 from django.utils.html import strip_tags
 import re
- 
+import math
+from datetime import datetime
 # Create your views here.
 
-
+def timeCal(post_dt):
+    curr = datetime.now()
+    print(curr,type(curr))
+    tim =(curr-post_dt).total_seconds()
+    if 60<=tim<3600:
+        tim=tim/60
+        # print(str(math.floor(tim))+' min ago')
+        return str(math.floor(tim))+' min ago'   
+    elif 3600<=tim<86400:
+        tim=tim/3600
+        minT=int(float('%.2f' % (Decimal(tim)%1))*60)
+        # updtime.append(str(math.floor(tim))+' hour ago'+str(minT))
+        return str(math.floor(tim))+' hr '+str(minT)+' min ago'
+    elif tim>=86400:
+        tim=tim/86400
+        return str(math.floor(tim))+' days ago'
+    else:
+        return str(math.floor(tim))+' seconds ago'
 
 def index(request):
     blog = BlogPost.objects.order_by('-id')[:3]
@@ -38,7 +56,9 @@ def about(request):
 def detailed_blog_view(request, id):
     blog_data = BlogPost.objects.get(id=id)
     comments = blog_data.comments.all().order_by('-created_at')
-    print("comments are ",comments)
+    print("comments are ",blog_data.date_posted)
+    since_post = timeCal(blog_data.date_posted.replace(tzinfo=None))
+    print('>>>>>>>>', since_post)
     # comments = Comment.objects.filter(blog=id).order_by('-created_at')
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
@@ -52,7 +72,7 @@ def detailed_blog_view(request, id):
     # else:
     #     comment_form = CommentForm()
 
-    return render(request, "blogdet.html",{'blog_data':blog_data,'comments':comments})
+    return render(request, "blogdet.html",{'blog_data':blog_data,'comments':comments, 'since_post':since_post})
 
 def likecount(request,post_id):
     post = get_object_or_404(BlogPost, id=post_id)
@@ -136,7 +156,12 @@ def NationDetails(request,cname):
 def get_state_blog(request):
     if request.method == 'GET':
         state = request.GET.get('state')
-        stateblogs = list(BlogPost.objects.filter(state=state).values())
-
+        stateblogs = list(BlogPost.objects.filter(state=state).values('id','title','description','author','date_posted','photo_1','likes'))
+        print('post date',stateblogs[0]['date_posted'].replace(tzinfo=None))
+        print(timeCal(stateblogs[0]['date_posted'].replace(tzinfo=None)))
+        datadic = [{**i,'sincePost':timeCal(i['date_posted'].replace(tzinfo=None))} for i in stateblogs]
+       
+        #  {**i,'sincePost':timeCal(i['date_posted'].replace(tzinfo=None))}   
+        print(stateblogs)
         print('>>>>>>>><>>>>',stateblogs)
-        return JsonResponse({'data':stateblogs})
+        return JsonResponse({'data':datadic})

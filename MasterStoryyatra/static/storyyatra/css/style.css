@@ -254,6 +254,10 @@ nav ul li:hover > ul {
     margin-top: 8%;
 }
 
+.imgblog_heading{
+  color: white;
+}
+
 .Blog_Post_Head_Img{
   position: relative;
 }

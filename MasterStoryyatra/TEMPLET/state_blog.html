@@ -22,7 +22,7 @@
       {% for state in states %}
       <li class="state-li" data-state="{{ state.state }}">{{ state.state }}</li>
       {% endfor %}
-      
+
     </ul>
   </div>
   <div class="col-lg-7 col-md-7 col-xs-12 homebloglist" id="state-blogs">
@@ -48,9 +48,23 @@
           var html = '';
           for (var i = 0; i < data.length; i++) {
             html += '<a href="/detailed_blog/' + data[i].id + '">' +
-              '<div class="card mb-3"><div class="row no-gutters"><div class="col-md-4"><img src="/media/' + data[i].photo_1 + '" alt="{{i.title}}" style="height: 24vh; width: auto;" /></div>' +
-              '<div class="col-md-8"><div class="card-body"><h5 class="card-title">' + data[i].title + '</h5><p class="card-text">' + data[i].description + '.....Read more</p>' +
-              '<p class="card-text"><small class="text-muted">' + moment(data[i].date_posted).format("MM/DD/YYYY hh:mm:ss A") + '</small></p></div></div></div></div></a>';
+              '<div class="card mb-3 no-gutters"><div class="row "> <div class="col-md-4"><img src="/media/' + data[i].photo_1 +'"style="height: 24vh; width: auto;" /></div>'+
+                  '<div class="col-md-8">'+
+              '<div class="card-body">'+
+                      '<h5 class="card-title">' + data[i].title +'</h5>'+
+                      '<p class="card-text">'+ data[i].description + '<i>By '+ data[i].author +'</i></p>'+
+                      '<div class="row">'+
+                        '<div class="col-lg-8 col-md-8">'+
+                          '<p class="card-text"><small class="text-muted">'+ data[i].sincePost +' </small></p>'+
+                        '</div>'+
+                        '<div class="col-lg-4 col-md-4">'+
+                          '<p class="card-text text-right">Like:'+ data[i].likes +'</p>'+
+                        '</div>'+
+                      '</div>'+
+                    '</div>'+
+                  '</div>'+
+                '</div>'+
+              '</div></a>';
           }
           $('#state-blogs').html(html);
         },
