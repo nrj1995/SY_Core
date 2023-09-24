@@ -137,7 +137,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-
+CKEDITOR_UPLOAD_PATH = 'uploads/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
