@@ -11,6 +11,8 @@ from django.utils.html import strip_tags
 import re
 import math
 from datetime import datetime
+import os
+from django.contrib.admin.views.decorators import staff_member_required
 # Create your views here.
 
 def timeCal(post_dt):
@@ -165,3 +167,32 @@ def get_state_blog(request):
         print(stateblogs)
         print('>>>>>>>><>>>>',stateblogs)
         return JsonResponse({'data':datadic})
+
+# @staff_member_required
+def list_images(request):
+    media_root = settings.MEDIA_ROOT
+    image_files = []
+    img_dic ={}
+    img_fldr = os.listdir(media_root)
+    if request.method== 'POST':
+        selected_img = request.POST.getlist('selected_images')
+        print(">>>>>>>>>>>",selected_img)
+        for img in selected_img:
+            img_path = (os.path.join(media_root,img.replace('/media/','')))
+            # print("nfjfjfk========>",img_path)
+            if os.path.exists(img_path):
+                # print(",,....",img_path)
+                os.remove(img_path)
+        return JsonResponse({'message': 'Selected images deleted successfully'})
+    
+    fldr_data ={i:[] for i in img_fldr}
+    for root, dirs, files in os.walk(media_root):
+        for file in files:
+            if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp')):
+                for i in fldr_data:
+                    if i in root.split("\\"):
+                        fldr_data[i].append(settings.MEDIA_URL+os.path.relpath(os.path.join(root, file), media_root))
+    print("dicts contains ---?",fldr_data)
+    # context = {'image_files': image_files}
+    # print("image element", context)
+    return render(request, 'lists_images.html', {'fldr_data':fldr_data})

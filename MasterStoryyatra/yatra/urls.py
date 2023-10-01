@@ -14,6 +14,6 @@ urlpatterns = [
      path('navbar/', views.navbar_data, name='navbar_data'),
      path('nation-detail/<str:cname>/', views.NationDetails, name='NationDetails'),
      path('get-state-blog/', views.get_state_blog, name='get_state_blog'),
-
+     path('image_list/', views.list_images, name='get_img'),
 ]
 
