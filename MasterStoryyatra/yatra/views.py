@@ -40,14 +40,6 @@ def index(request):
     ccount=[Comment.objects.filter(blog=i.id,parent_comment__isnull=True).count() for i in liked_blog ]
     top_liked_blog=list(zip(liked_blog,ccount))
     print(top_liked_blog[0][0].title)
-    # blog1 = BlogPost.objects.last()
-    # contstr = strip_tags(blog1.content).replace('&nbsp;','').strip()
-    # refstr = re.sub(' +', ' ', contstr)
-    # print("ref strjjjjjjjj--",refstr[:100])
-    # clean_text = "\n".join([line for line in refstr.split("\n") if line.strip() != ""])
-    # print("clean datrrjn---",clean_text)
-    # print(blog[0].photo_1)
-    # print(settings.MEDIA_ROOT)
     media=settings.MEDIA_ROOT
     # print("bfjdfnfd",blog1[0].content)
     return render(request, "index.html",{'blog':blog,'liked_blog':top_liked_blog,'media':media})
@@ -71,8 +63,7 @@ def detailed_blog_view(request, id):
             new_comment.blog= blog_data
             new_comment.save()
             return redirect('detailed_blog',id=blog_data.id)
-    # else:
-    #     comment_form = CommentForm()
+
 
     return render(request, "blogdet.html",{'blog_data':blog_data,'comments':comments, 'since_post':since_post})
 
@@ -103,15 +94,6 @@ def create_post(request):
 
     return render(request, 'create_post.html', {'form': form})
 
-# def post_comment(request,post_id):
-#     if request.method=='POST':
-#         name = request.POST.get('name')
-#         email = request.POST.get('email')
-#         comment = request.POST.get('body')
-#         blog = BlogPost.objects.get(id=post_id)
-#         com = Comment.objects.create(name=name,email=email,blog=blog,text=comment)
-#         commethtml = '<li class="comment"><div class="comment-author">'+com.name+'</div><div class="comment-date">'+str(com.created_at)+'</div><div class="comment-text">'+com.text+'</div></li>'
-#         return JsonResponse({'success': True,'comment': commethtml})
 
 # ---------Function for Search result------------------
 def search(request):
@@ -186,11 +168,16 @@ def list_images(request):
         return JsonResponse({'message': 'Selected images deleted successfully'})
     
     fldr_data ={i:[] for i in img_fldr}
+    if settings.DEBUG:
+        splitchr = "\\"
+    else:
+        splitchr = "/"
     for root, dirs, files in os.walk(media_root):
         for file in files:
             if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp')):
                 for i in fldr_data:
-                    if i in root.split("\\"):
+                    # for windows split("\\") and for ubuntu split("/") will work
+                    if i in root.split(splitchr):
                         fldr_data[i].append(settings.MEDIA_URL+os.path.relpath(os.path.join(root, file), media_root))
     print("dicts contains ---?",fldr_data)
     # context = {'image_files': image_files}

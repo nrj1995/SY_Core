@@ -1,51 +1,94 @@
 <!-- image_manager/templates/image_manager/image_list.html -->
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Image List</title>
     <style>
         /* Define the shape and size of the image icons */
         .image-icon {
-            width: 50px; /* Set the width of the icon */
-            height: 50px; /* Set the height of the icon */
-            border: 2px solid #000; /* Add a border for a square shape */
-            border-radius: 10px; /* Add border-radius for a rounded square shape */
-            overflow: hidden; /* Hide overflowing content (e.g., if the image is larger) */
+            width: 50px;
+            /* Set the width of the icon */
+            height: 50px;
+            /* Set the height of the icon */
+            border: 2px solid #000;
+            /* Add a border for a square shape */
+            border-radius: 10px;
+            /* Add border-radius for a rounded square shape */
+            overflow: hidden;
+            /* Hide overflowing content (e.g., if the image is larger) */
         }
 
         /* Style the images inside the icons */
         .image-icon img {
-            width: 100%; /* Make the image fill the icon container */
-            height: 100%; /* Make the image fill the icon container */
-            object-fit: cover; /* Scale and crop the image to fill the container */
+            width: 100%;
+            /* Make the image fill the icon container */
+            height: 100%;
+            /* Make the image fill the icon container */
+            object-fit: cover;
+            /* Scale and crop the image to fill the container */
         }
     </style>
-
 </head>
+
 <body>
     <h1>Image List</h1>
+    <input type="text" id="searchInput" placeholder="Search...">
     <div class="container">
-    <form id="image-form" method="post">
-        {% csrf_token %}
-        {% for key, values in fldr_data.items %}
-        <ul>
-            <h1>{{key}}</h1>
-            {% for val in values %}
-                <li>
-                    <input type="checkbox" name="selected_images" value="{{val}}">
-                    <div class="image-icon">
-                        <!-- Image displayed as an icon -->
-                        <img src="{{val}}" alt="{{val}}">
-                    </div>
-                    <!-- <img src="{{ image.thumbnail_path }}" alt="{{ image.image_path }}"> -->
-                    {{ val }}
-                </li>
-            {% endfor %}
-        </ul>
-        {% endfor %}
-        <button type="submit" name="action" value="delete">Delete Selected</button>
+        <div id="checkboxContainer">
+            <form id="image-form" method="post">
+                {% csrf_token %}
+                {% for key, values in fldr_data.items %}
+                <ul>
+                    <h1>{{key}}</h1>
+                    {% for val in values %}
+                    <label>
+                        <li>
+                            <input type="checkbox" name="selected_images" value="{{val}}">
+                            {{ val }}
+                            <div class="image-icon">
+                                <!-- Image displayed as an icon -->
+                                <img src="{{val}}" alt="{{val}}">
+                            </div>
+                        </li>
+                    </label>
+                    {% endfor %}
+                </ul>
+                {% endfor %}
+                <button type="submit" name="action" value="delete">Delete Selected</button>
+        </div>
+        </form>
     </div>
-    </form>
+    <script>
+        // Get references to the input field and checkbox container
+        const searchInput = document.getElementById("searchInput");
+        const checkboxContainer = document.getElementById("checkboxContainer");
+        console.log("serach query", searchInput)
+        console.log("checkboxes data---->", checkboxContainer)
+        // Function to perform the search
+        function performSearch() {
+            const query = searchInput.value.toLowerCase();
+
+            // Get all checkboxes within the container
+            const checkboxes = checkboxContainer.querySelectorAll('input[type="checkbox"]');
+
+            // Loop through checkboxes and show/hide based on the search query
+            checkboxes.forEach(checkbox => {
+                const label = checkbox.parentNode;
+                const labelText = label.textContent.toLowerCase();
+                if (labelText.includes(query)) {
+                    label.style.display = "block"; // Show checkbox
+                } else {
+                    label.style.display = "none";  // Hide checkbox
+                }
+            });
+        }
+
+        // Event listener for input field changes (search as user types)
+        searchInput.addEventListener("input", performSearch);
+    </script>
 </body>
+
 </html>
