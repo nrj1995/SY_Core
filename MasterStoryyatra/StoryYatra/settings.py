@@ -74,8 +74,25 @@ WSGI_APPLICATION = 'StoryYatra.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-DATABASES = {
+if DEBUG:
+    DATABASES = {
+     'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+ }
+else:
+    DATABASES = {
+        # prod
+        'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'sy_db',
+        'USER': 'sy_db_user',
+        'PASSWORD': 'sy_neer',
+        'HOST': 'localhost',
+        'PORT': '5432'
+       }
+    }
     # # test
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -85,20 +102,8 @@ DATABASES = {
     #     'HOST': 'localhost',
     #     'PORT': '5432'   
     # }
-    # prod
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'sy_db',
-        'USER': 'sy_db_user',
-        'PASSWORD': 'sy_neer',
-        'HOST': 'localhost',
-        'PORT': '5432'
-    }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
-}
+    
+    
 
 
 # Password validation

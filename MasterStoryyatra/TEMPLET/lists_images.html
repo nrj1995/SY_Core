@@ -42,7 +42,7 @@
                 {% csrf_token %}
                 {% for key, values in fldr_data.items %}
                 <ul>
-                    <h1>{{key}}</h1>
+                    <h1>{{key}} ({{ values|length}})</h1>
                     {% for val in values %}
                     <label>
                         <li>

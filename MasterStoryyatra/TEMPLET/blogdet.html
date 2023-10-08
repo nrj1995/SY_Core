@@ -9,12 +9,13 @@
             <img src={{blog_data.photo_1.url}} alt="Card image">
         </div>
         <div class="row text-center Blog_Post_Head_text ">
-            <div class="col-lg-12 col-md-12 col-xs-12 ">
-                <h5 class="imgblog_heading">{{blog_data.title}}</h5>
-                <p class="imgblog_heading">{{blog_data.description}}</p>
-                <p class="imgblog_heading"><i>BY {{blog_data.author}} {{since_post}}</i></p>
-            </div>
-
+            <span class="blog_headtxt">
+                <div class="col-lg-12 col-md-12 col-xs-12 ">
+                    <h5 class="imgblog_heading">{{blog_data.title}}</h5>
+                    <p class="imgblog_heading">{{blog_data.description}}</p>
+                    <p class="imgblog_heading"><i>BY {{blog_data.author}} {{since_post}}</i></p>
+                </div>
+            </span>
         </div>
     </div>
 </div>
@@ -60,7 +61,8 @@
 
         $('#like-button').click(function () {
 
-            var post_id = {{ blog_data.id }};
+            var post_id = {{ blog_data.id }
+        };
 
         // Get the CSRF token from the cookie
         var csrftoken = Cookies.get('csrftoken');
