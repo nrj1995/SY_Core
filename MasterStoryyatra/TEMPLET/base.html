@@ -20,6 +20,15 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S63CMCL7XQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-S63CMCL7XQ');
+  </script>
   <script>
     function changeTitle(newTitle) {
       document.title = newTitle;
@@ -57,7 +66,7 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
             </li>
-           
+
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
@@ -84,7 +93,7 @@
   {% block content %}
 
   {% endblock %}
- 
+
 
   <footer>
     <div class="fitfooter text-center fixed-bottom" id="topheader1">
@@ -95,10 +104,11 @@
               <div class="col-lg-4 col-md-6 col-12 ">
                 <h3 class="footerh3">Sharing Our Adventures</h3>
                 <p><b>StoryYatra</b> "Where words take flight,
-                   our stories ignite a sense of wonder.
-                   Discover the joy of wandering, as we share tales that resonate with the traveler in you,
-                   inspiring new horizons and unforgettable experiences. Let our stories guide your footsteps and inspire your own narrative,
-                   as you traverse the globe and forge meaningful connections along the way."</p>
+                  our stories ignite a sense of wonder.
+                  Discover the joy of wandering, as we share tales that resonate with the traveler in you,
+                  inspiring new horizons and unforgettable experiences. Let our stories guide your footsteps and inspire
+                  your own narrative,
+                  as you traverse the globe and forge meaningful connections along the way."</p>
 
               </div>
               <div class="col-lg-4 col-md-6 col-12 ">
@@ -114,12 +124,14 @@
               <div class="col-lg-4 col-md-6 col-12 footerlogo">
                 <h3 class="footerh3">Connect with us</h3>
                 <!--Facebook-->
-                <a href="https://www.facebook.com/profile.php?id=100091113944717" class="fb-ic mr-3" role="button"><i class="fab fa-lg fa-facebook-f logo"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=100091113944717" class="fb-ic mr-3" role="button"><i
+                    class="fab fa-lg fa-facebook-f logo"></i></a>
                 <!--Instagram-->
                 <a href="https://www.instagram.com/storyyatra/" target="_blank" class="ins-ic mr-3" role="button"><i
                     class="fab fa-lg fa-instagram logo"></i></a>
                 <!--Youtube-->
-                <a href="https://www.youtube.com/@storyyatra" class="yt-ic mr-3" role="button"><i class="fab fa-lg fa-youtube logo"></i></a>
+                <a href="https://www.youtube.com/@storyyatra" class="yt-ic mr-3" role="button"><i
+                    class="fab fa-lg fa-youtube logo"></i></a>
 
 
               </div>
@@ -157,33 +169,33 @@
   <script type="text/javascript" src="{% static '/storyyatra/js/story.js' %}">
   </script>
   <script>
-$(document).ready(function() {
-  $.ajax({
-    url: '/navbar/',
-    success: function(data) {
-      console.log('<<<<<<<<<',data.data)
-      var items = data.data;
-      var $dropdownMenu = $('.dropdown-menu');
-      $.each(items, function(index, item) {
-        var $li = $('<li>').appendTo($dropdownMenu);
-        $('<a>', { href:"/nation-detail/" + item + "/", text: item ,class:'dropdown-item'}).appendTo($li);
+    $(document).ready(function () {
+      $.ajax({
+        url: '/navbar/',
+        success: function (data) {
+          console.log('<<<<<<<<<', data.data)
+          var items = data.data;
+          var $dropdownMenu = $('.dropdown-menu');
+          $.each(items, function (index, item) {
+            var $li = $('<li>').appendTo($dropdownMenu);
+            $('<a>', { href: "/nation-detail/" + item + "/", text: item, class: 'dropdown-item' }).appendTo($li);
+          });
+        }
       });
-    }
-  });
-  
-});
+
+    });
 
 
-// ----------------- code for activating nav items on click-------------------
+    // ----------------- code for activating nav items on click-------------------
     const navLinks = document.querySelectorAll(".nav-link");
-    
-    window.addEventListener("load", function() {
+
+    window.addEventListener("load", function () {
       // Set the active navigation item based on the current pathname
       setActiveNavItem(window.location.pathname);
     });
-    
+
     function setActiveNavItem(pathname) {
-      navLinks.forEach(function(link) {
+      navLinks.forEach(function (link) {
         if (link.getAttribute("href") === pathname) {
           link.classList.add("active");
         } else {
@@ -191,9 +203,9 @@ $(document).ready(function() {
         }
       });
     }
-    
-    navLinks.forEach(function(link) {
-      link.addEventListener("click", function(event) {
+
+    navLinks.forEach(function (link) {
+      link.addEventListener("click", function (event) {
         // event.preventDefault();
         const href = this.getAttribute("href");
         // Change the URL without reloading the page
@@ -201,7 +213,7 @@ $(document).ready(function() {
         setActiveNavItem(href);
       });
     });
-// code for activating nav items on click END here........
+    // code for activating nav items on click END here........
   </script>
 
 
