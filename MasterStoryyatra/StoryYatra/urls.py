@@ -18,10 +18,16 @@ from django.urls import path
 from django.urls.conf import include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.sitemaps.views import sitemap
+from yatra.sitemap import postsitemap,staticpagegsitemap
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ckeditor/',include('ckeditor_uploader.urls')),
-    path('',include('yatra.urls'))
+    path('',include('yatra.urls')),
+    path('sitemap.xml',sitemap,{'sitemaps':{'posts':postsitemap, 'static':staticpagegsitemap}}, name='django.contrib.sitemaps.views.sitemap')
+    
     # path('', views.index, name='index'),
 ]
 

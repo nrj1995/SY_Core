@@ -30,6 +30,8 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 
+SITE_ID = 1
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'yatra.apps.YatraConfig',
     'ckeditor',
+    'django.contrib.sites', # Needed only to use sitemap framework
+    'django.contrib.sitemaps', #Sitemap framework; good for SEO
 ]
 
 MIDDLEWARE = [

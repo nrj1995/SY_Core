@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+
 # from ckeditor.fields import RichTextUploadingField 
 from ckeditor_uploader.fields import RichTextUploadingField
 
@@ -35,6 +37,11 @@ class BlogPost(models.Model):
     def __str__(self):
 
         return f"blog name- {self.title} uploaded on {str(self.date_posted)}"
+
+    def get_absolute_url(self):
+      return reverse('detailed_blog', args=[str(self.id)])
+      
+      
         
 
 # class BlogPst(models.Model):
