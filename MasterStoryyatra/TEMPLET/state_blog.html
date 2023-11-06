@@ -10,6 +10,7 @@
     <div class="col-lg-12 col-md-12 col-xs-12 About_Head_Text">
       <h2>Story-यात्रा</h2>
       <h5>nayee rahe. yahi chahe</h5>
+      <h1 id="countryname" style="text-transform: capitalize; color: black;">{{cname}}</h1>
       <!-- <p class="">Last updated 3 mins ago</p> -->
     </div>
 
@@ -31,7 +32,13 @@
   </div>
 
 </div>
-
+<script>
+  var title = document.getElementById("countryname").textContent.toUpperCase();
+  var newTitle = "StoryYatar | " + title;
+  window.onload = function() {
+      changeTitle(newTitle);
+  }
+</script>
 
 <script>
   $(document).ready(function () {

@@ -134,7 +134,8 @@ def navbar_data(request):
 def NationDetails(request,cname):
     print("cname-->",cname)
     states =  BlogPost.objects.values('state').filter(Nation=cname).distinct()
-    return render(request, 'state_blog.html',{'states': states})
+    print(states)
+    return render(request, 'state_blog.html',{'states': states, 'cname':cname})
    
 
 def get_state_blog(request):

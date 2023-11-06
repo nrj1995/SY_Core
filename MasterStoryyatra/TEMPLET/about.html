@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
-
+<script>
+    var newTitle = "StoryYatra | About"
+    window.onload = function() {
+        changeTitle(newTitle);
+    }
+</script>
 <div class="row About_Head">
     <div class=" col-lg-12 col-md-12 col-xs-12 About_Head_Img ">
         <img src="{% static '/storyyatra/img/panorma.webp' %}" alt="Card image">
